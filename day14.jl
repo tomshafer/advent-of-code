@@ -19,7 +19,7 @@ function day14_puzzle01(file::String)
             match(r"mem\[([0-9]+)\] = (\d+)", line).captures
         )
 
-        bitvalue = reverse(digits(value, base = 2, pad = 36))
+        bitvalue = reverse(digits(value, base=2, pad=36))
         bitvalue[bitmask] = modified_vals
         mem[position] = bitstoint(bitvalue)
     end
@@ -45,7 +45,7 @@ function day14_puzzle02(file::String)
         )
 
         # Get new, masked key
-        bitposition = reverse(digits(position, base = 2, pad = 36))
+        bitposition = reverse(digits(position, base=2, pad=36))
         bitposition[bitmask_o] = masked_vals
 
         # No combinatorics if no X's
@@ -55,7 +55,7 @@ function day14_puzzle02(file::String)
         end
 
         # Combinatorics
-        xprods = cat(Iterators.product([[0, 1] for x in bitmask_x]...)..., dims = 1)
+        xprods = cat(Iterators.product([[0, 1] for x in bitmask_x]...)..., dims=1)
         for r in xprods
             bitposition[bitmask_x] = [i for i in r]
             mem[bitstoint(bitposition)] = value

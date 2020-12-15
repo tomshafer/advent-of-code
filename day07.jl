@@ -8,7 +8,7 @@ function read_rules(file::String)
 
         from = popfirst!(test)
         for to in split(pop!(test), ',')
-            qty, bagtype = split(strip(to), ' ', limit = 2)
+            qty, bagtype = split(strip(to), ' ', limit=2)
             if qty == "no"
                 continue
             end
@@ -26,7 +26,7 @@ function day07_puzzle01(input::String)
     bagtypes = Vector{String}()
     last = ["shiny gold"]
     while true
-        ids = [i for (i,v) in enumerate(vals) if v in last]
+        ids = [i for (i, v) in enumerate(vals) if v in last]
         nextval = keys[ids]
         if nextval == []
             break
@@ -38,4 +38,28 @@ function day07_puzzle01(input::String)
     println("Found $(length(alltypes)) bag types")
 end
 
-# day07_puzzle01("day07_input.txt")
+function bag_contains(
+    bag::String,
+    keys::Vector{String},
+    vals::Vector{String},
+    nums::Vector{Int}
+)::Int
+
+    bags = vals[keys .== bag]
+    counts = nums[keys .== bag]
+
+    total = 0
+    for (i, b) in enumerate(bags)
+        total += counts[i] * (1 + bag_contains(b, keys, vals, nums))
+    end
+    total
+end
+
+function day07_puzzle02(input::String)
+    k, v, n = read_rules(input)
+    bags = bag_contains("shiny gold", k, v, n)
+    print("Our bag contains $bags bags!")
+end
+
+day07_puzzle01("day07_input.txt")
+day07_puzzle02("day07_input.txt")

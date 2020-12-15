@@ -38,7 +38,7 @@ function day11_puzzle01(file::String)
     iters = 0
     while true
         iters += 1
-        for m = 1:rows, n=1:cols
+        for m in 1:rows, n in 1:cols
             occupied = adjseats(mat, m, n)
             (mat[m, n] == 'L' && occupied == 0) && (new[m, n] = '#'; continue)
             (mat[m, n] == '#' && occupied ≥  4) && (new[m, n] = 'L'; continue)

@@ -1,4 +1,25 @@
 
+function day04_puzzle01(input::String)
+    required = Set(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"])
+    open("day04_input.txt") do io
+        total = 0
+        passkeys = Set{String}()
+        for line in eachline(io)
+            if line == ""
+                total += all(x in passkeys for x in required)
+                passkeys = Set{String}()
+                continue
+            end
+            matches = eachmatch(r"([a-zA-Z]+)(?=:)", line)
+            for m in matches
+                push!(passkeys, m.captures...)
+            end
+        end
+        total += all(x in passkeys for x in required)
+        println("Total valid passports: $total")
+    end
+end
+
 function check_valid(input::Dict{String,String})::Int
     required = Set(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"])
     if any(!in(x, keys(input)) for x in required)
@@ -26,9 +47,9 @@ function check_valid(input::Dict{String,String})::Int
     if !endswith(input["hgt"], r"in|cm")
         return 0
     end
-    if endswith(input["hgt"], "cm") && !(150 <= parse(Int, input["hgt"][1:end-2]) <= 193)
+    if endswith(input["hgt"], "cm") && !(150 <= parse(Int, input["hgt"][1:end - 2]) <= 193)
         return 0
-    elseif endswith(input["hgt"], "in") && !(59 <= parse(Int, input["hgt"][1:end-2]) <= 76)
+    elseif endswith(input["hgt"], "in") && !(59 <= parse(Int, input["hgt"][1:end - 2]) <= 76)
         return 0
     end
     1
@@ -55,4 +76,5 @@ function day04_puzzle02(input::String)
     end
 end
 
-# day04_puzzle02("day04_input.txt")
+day04_puzzle01("day04_input.txt")
+day04_puzzle02("day04_input.txt")

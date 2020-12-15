@@ -1,7 +1,7 @@
 
 using Printf
 
-function readinput(file::String; dict::Bool = false)
+function readinput(file::String; dict::Bool=false)
     timestring, busstring = readlines(file)
     buses = [parse(Float64, b) for b in split(busstring, ",") if b ≠ "x"]
     parse(Float64, timestring), buses
@@ -40,8 +40,8 @@ function day13_puzzle02(file::String)
         # Lazy way to do this: Run until everything matches up
         m_0 = m ÷ a
         m_1 = mod(m, a)
-        for i in 0:(a-1)
-            test = t + i*increment
+        for i in 0:(a - 1)
+            test = t + i * increment
             if (mod(test, a) == a - m_1) || (m_1 == 0 == mod(test, a))
                 t += i * increment
                 increment *= a

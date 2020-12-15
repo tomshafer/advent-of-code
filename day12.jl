@@ -7,7 +7,7 @@ end
 
 function set_location_heading(
         loc::Array, head::Array, dir::Char, dist::Float64;
-        which = "loc"
+        which="loc"
     )
     DMAP = Dict(
         'N' => [ 0,  1],
@@ -24,9 +24,9 @@ function set_location_heading(
             head += DMAP[dir] * dist
         end
     elseif dir in "LR"
-        r = sqrt(sum(head .^ 2))
+        r = sqrt(sum(head.^2))
         x, y = head
-        t = atan(y, x) + (-1) ^ (dir == 'R') * π * dist / 180
+        t = atan(y, x) + (-1)^(dir == 'R') * π * dist / 180
         head = r .* [cos(t), sin(t)]
     end
     loc, head
@@ -52,7 +52,7 @@ function day12_puzzle02(file::String)
             heading,
             dir,
             dist,
-            which = "head"
+            which="head"
         )
     end
     println(sum(abs.(location)))
