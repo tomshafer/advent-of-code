@@ -1,29 +1,26 @@
 "use strict";
 
 const fs = require("fs");
-const arr = fs.readFileSync("inputs/01.txt").toString().split("\n").filter(Number);
+const input = fs.readFileSync("inputs/01.txt").toString().split("\n").filter(Number);
 
 // Part 1
-console.log(arr.reduce((a, b) => Number(a) + Number(b)));
+console.log("Part 1:", input.reduce((a, b) => Number(a) + Number(b)));
 
 // Part 2
-let iter = 0, total = 0, seen = new Set(), check = false;
+let total = 0, seen = new Set();
+let iter = 0;
 
-while (iter < 1000) {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === "") {
+mainloop: while (iter < 1000) {
+    for (let i = 0; i < input.length; i++) {
+        if (input[i] === "") {
             continue;
         }
 
-        total += Number(arr[i]);
+        total += Number(input[i]);
         if (seen.has(total)) {
-            console.log(total);
-            check = true;
-            break;
+            break mainloop;
         }
         seen.add(total);
     }
-    if (check) {
-        break;
-    }
 }
+console.log("Part 2:", total);
