@@ -1,6 +1,7 @@
 # Advents of Code!
 
-Hey, this is the second year I've done this.
+Hey, I've done this for three years now!
 
 - 2020: Julia (made it through Day 22 or so)
 - 2021: Python
+- 2022: Python (made it through Day 16)
