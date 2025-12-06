@@ -1,0 +1,48 @@
+---
+title: Advent of Code 2024, Day 3
+format: html
+---
+
+```{python}
+import re
+from operator import mul
+```
+
+```{python}
+with open("03.txt") as f:
+    cmd = f.read().strip()
+```
+
+## Part 1
+
+```{python}
+r1 = re.compile(r"mul\([0-9]{1,3},[0-9]{1,3}\)")
+sum([mul(*map(int,m.removeprefix('mul(').removesuffix(')').split(','))) for m in r1.findall(cmd)])
+
+```
+
+## Part 2
+
+
+```{python}
+
+# Find the donts
+donts = [m.start() for m in re.finditer(r"don't\(\)", cmd)] + [len(cmd)]
+dos = [0] + [m.start() for m in re.finditer(r"do\(\)", cmd)]
+
+x = 0
+for end in donts:
+    start = min([s for s in dos if s < end], default=end)
+    print(start, end)
+
+    substr = cmd[start:end]
+    x += sum(
+        [
+            mul(*map(int, m.removeprefix("mul(").removesuffix(")").split(",")))
+            for m in r1.findall(substr)
+        ]
+    )
+
+    dos = [d for d in dos if d > end]
+    donts = [d for d in donts if d > end]
+```
